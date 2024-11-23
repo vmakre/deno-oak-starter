@@ -59,14 +59,14 @@ We use [nessie](https://deno.land/x/nessie) to manage database migration.
 - In the application root, we have `nessie.config.ts`. Make sure to update this with the DB credentials. 
 - Run the following command to run the migration. Migration should create necessary tables and dump the data.
 ```
-$ deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v1.0.0-rc3/cli.ts migrate
+$ deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v2.0.11/cli.ts migrate
 ```
 
 With this, the user table would be created and the table would be seeded with fake data
 
 - Further, to add new migration, for example, to create new product table run
 ```
-deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v1.0.0-rc3/cli.ts make create_product
+deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v2.0.11/cli.ts make create_product
 ```
 
 ## Modules
