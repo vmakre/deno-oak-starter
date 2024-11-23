@@ -45,11 +45,6 @@ We can run the project **with/ without Docker**.
     - In application root, rename example env file `env.example` to `.env`.
     - An example env file contains MySQL credentials for the dockerized environment. For non-docker setup, **update MySQL credentials** here.
 - **Run API**
-    - **For Docker**: Up docker-compose, this will create a docker container with the database with the given name in env. 
-    ``` 
-    $ docker-compose up --build
-    ```
-
     - For non-docker run API server with Deno run time
     ```
     $ deno run --allow-read --allow-net app.ts
@@ -79,13 +74,15 @@ deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v1.0.
 
 | Package  | Purpose |
 | ---------|---------|
-|[oak@v5.0.0](https://deno.land/x/oak@v5.0.0)| Deno middleware framework|
-|[dotenv@v0.4.2](https://deno.land/x/dotenv@v0.4.2)| Read env variables|
-|[mysql@2.2.0](https://deno.land/x/mysql@2.2.0)|MySQL driver for Deno|
-|[nessie@v1.0.0-rc3](https://deno.land/x/nessie@v1.0.0-rc3)| DB migration tool for Deno|
-|[validasaur@v0.7.0](https://deno.land/x/validasaur@v0.7.0)| validation library|
-|[djwt@v0.9.0](https://deno.land/x/djwt@v0.9.0)| JWT token encoding|
-|[bcrypt@v0.2.1](https://deno.land/x/bcrypt@v0.2.1)| bcrypt encription lib|
+|[oak@v17.1.3](https://deno.land/x/oak@v17.1.3)| Deno oak middleware framework|
+|[mysql@2.12.1](https://deno.land/x/mysql@2.12.1)|MySQL driver for Deno|
+|[nessie@v2.0.11](https://deno.land/x/nessie@v2.0.11)| DB migration tool for Deno|
+|[validasaur@v0.15.0](https://deno.land/x/validasaur@v0.15.0)| validation library|
+|[djwt@v3.0.2](https://deno.land/x/djwt@v3.0.2)| JWT token encoding|
+|[bcrypt@v0.4.1](https://deno.land/x/bcrypt@v0.4.1)| bcrypt encription lib|
+|[std](https://deno.land/std@0.224.0) | standard libs|
+
+
 
 ### Project Layout 
 
