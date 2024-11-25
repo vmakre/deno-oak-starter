@@ -1,11 +1,10 @@
 import {
   isHttpError,
   Status,
-} from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { config } from "./../config/config.ts";
-import { ContextState } from "./../types.ts";
+} from "@oak/mod.ts";
+import { Context } from "./../types.ts";
 
-const errorMiddleware = async (ctx: ContextState, next: () => Promise<void>) => {
+const errorMiddleware = async (ctx: Context, next: () => Promise<void>) => {
   try {
     await next();
   } catch (err) {
@@ -18,12 +17,12 @@ const errorMiddleware = async (ctx: ContextState, next: () => Promise<void>) => 
      * end user in non "development" mode
      */
     if (!isHttpError(err)) {
-      message = config.ENV === "dev" || config.ENV === "development"
+      message = Deno.env.get("ENV") === "dev" || Deno.env.get("ENV") === "development"
         ? message
         : "Internal Server Error";
     }
 
-    if (config.ENV === "dev" || config.ENV === "development") {
+    if (Deno.env.get("ENV") === "dev" || Deno.env.get("ENV") === "development") {
       console.log(err);
     }
 

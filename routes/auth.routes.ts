@@ -1,4 +1,4 @@
-import {
+import type {
   Context,
   CreateUser,
   RefreshToken,
@@ -8,7 +8,7 @@ import {
   required,
   isEmail,
   lengthBetween,
-} from "https://deno.land/x/validasaur@v0.7.0/src/rules.ts";
+} from "validasaur";
 
 import * as authService from "./../services/auth.service.ts";
 import { requestValidator } from "./../middlewares/request-validator.middleware.ts";

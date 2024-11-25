@@ -1,2 +1,7 @@
-import { config as loadConfig } from "https://deno.land/x/dotenv@v0.4.2/mod.ts";
-export const config = loadConfig();
+import { load as loadConfig } from "@std/dotenv/mod.ts";
+
+export const config = await loadConfig({
+    envPath: "./.env",
+    export: true,
+    allowEmptyValues: false,
+});

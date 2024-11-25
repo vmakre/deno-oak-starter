@@ -1,10 +1,10 @@
 import {
   validate,
-  ValidationErrors,
-  ValidationRules,
-} from "https://deno.land/x/validasaur@v0.15.0/mod.ts";
-import { httpErrors } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { Context } from "./../types.ts";
+  type ValidationErrors,
+  type ValidationRules,
+} from "validasaur";
+import { httpErrors } from "@oak/mod.ts";
+import { type Context } from "./../types.ts";
 
 /**
  * get single error message from errors
@@ -12,9 +12,9 @@ import { Context } from "./../types.ts";
 const getErrorMessage = (
   errors: ValidationErrors,
 ): string | undefined => {
-  for (let attr in errors) {
+  for (const attr in errors) {
     const attrErrors = errors[attr];
-    for (let rule in attrErrors) {
+    for (const rule in attrErrors) {
       return attrErrors[rule] as string;
     }
   }

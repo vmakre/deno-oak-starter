@@ -1,5 +1,5 @@
-import { Context, AuthUser } from "./../types.ts";
-import { validate } from "https://deno.land/x/djwt@v3.0.2/mod.ts";
+import type { ContextState, AuthUser } from "./../types.ts";
+import { validate } from "@djwt/mod.ts";
 
 /**
  * Decode token and returns payload
@@ -24,7 +24,7 @@ const getJwtPayload = async (token: string, secret: string): Promise<any | null>
  */
 const JWTAuthMiddleware = (JWTSecret: string) => {
   return async (
-    ctx: Context,
+    ctx: ContextState,
     next: () => Promise<void>,
   ) => {
     try {

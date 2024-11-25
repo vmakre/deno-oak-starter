@@ -1,5 +1,5 @@
-import { Router } from  "jsr:@oak/oak/router";
-import { Context } from "./../types.ts";
+import { Router } from  "@oak/router.ts";
+import type { Context } from "./../types.ts";
 
 import * as authRoutes from "./auth.routes.ts";
 import * as userRoutes from "./user.routes.ts";

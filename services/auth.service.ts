@@ -2,11 +2,11 @@ import * as userRepo from "./../repositories/user.repository.ts";
 import { httpErrors } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import * as encription from "../helpers/encription.ts";
 import * as jwt from "../helpers/jwt.ts";
-import {
-  CreateUser,
+import  {
+  type CreateUser,
   UserRole,
-  UserInfo,
-  LoginCredential,
+  type UserInfo,
+  type LoginCredential,
 } from "../types.ts";
 
 /**

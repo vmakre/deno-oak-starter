@@ -1,4 +1,4 @@
-import { UserRole } from "../user/user-role.ts";
+import type { UserRole as _UserRole } from "../user/user-role.ts";
 
 /**
  * Authenticated user info
