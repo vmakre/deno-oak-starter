@@ -8,12 +8,16 @@ import { printStartupMessage } from "./helpers/somefunc.ts";
 
 const port = 8000;
 const app = new Application<Context>();
+
+// app.addEventListener("error", (evt) => {
+//     // Will log the thrown error to the console.
+//     console.log(evt.error);
+//   });
  
 app.use(oakCors());
 app.use(middlewares.loggerMiddleware);
 app.use(middlewares.errorMiddleware);
 app.use(middlewares.timingMiddleware);
-
 app.use(middlewares.JWTAuthMiddleware( Deno.env.get("JWT_TOKEN_SECRET") ));
 app.use(middlewares.requestIdMiddleware);
 

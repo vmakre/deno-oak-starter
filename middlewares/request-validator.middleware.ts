@@ -4,7 +4,7 @@ import {
   type ValidationRules,
 } from "validasaur";
 import { httpErrors } from "@oak/mod.ts";
-import { type Context } from "./../types.ts";
+import type { Context } from "./../types.ts";
 
 /**
  * get single error message from errors
@@ -28,10 +28,11 @@ const requestValidator = ({ bodyRules }: { bodyRules: ValidationRules }) => {
   return async (ctx: Context, next: () => Promise<void>) => {
     /** get request body */
     const request = ctx.request;
-    const body = (await request.body()).value;
+    const json = (await request.body.json());
+    
 
     /** check rules */
-    const [isValid, errors] = await validate(body, bodyRules);
+    const [isValid, errors] = await validate(json, bodyRules);
     if (!isValid) {
       /** if error found, throw bad request error */
       const message = getErrorMessage(errors);

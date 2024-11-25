@@ -1,15 +1,15 @@
 import {
-
   Status,
   httpErrors,
-} from "https://deno.land/x/oak@v17.1.3/mod.ts";
+} from "@oak/mod.ts";
 import {
   required,
   isEmail,
-} from "https://deno.land/x/validasaur@v0.7.0/src/rules.ts";
+} from "validasaur";
+
 import * as userService from "./../services/user.service.ts";
 import { requestValidator, userGuard } from "./../middlewares/middlewares.ts";
-import { Context, UserRole } from "./../types.ts";
+import { type Context, UserRole } from "./../types.ts";
 import { hasUserRole } from "../helpers/roles.ts";
 
 /** request body schema for user create/update */
@@ -37,7 +37,7 @@ const getUsers = [
 const getUserById = [
   userGuard(UserRole.ADMIN),
   async (ctx: Context) => {
-    const { id } = helpers.getQuery(ctx, { mergeParams: true });
+    const { id } =   helpers.getQuery(ctx, { mergeParams: true });
     const user = await userService.getUserById(+id);
     ctx.response.body = user;
   },
@@ -63,7 +63,7 @@ const updateUser = [
     if (authUser) {
       if (id === authUser.id || hasUserRole(authUser, UserRole.ADMIN)) {
         const request = ctx.request;
-        const userData = (await request.body()).value;
+        const userData = (await request.body.json()).value;
         const user = await userService.updateUser(+id, userData);
         ctx.response.body = user;
         return;

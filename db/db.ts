@@ -4,7 +4,7 @@ const port = Deno.env.get("DB_PORT") ? parseInt(Deno.env.get("DB_PORT") || "") :
 
 const db = await new Client().connect({
   port,
-  hostname: Deno.env.get("DDB_HOST"),
+  hostname: Deno.env.get("DB_HOST"),
   username: Deno.env.get("DB_USER"),
   db: Deno.env.get("DB_NAME"),
   password: Deno.env.get("DB_PASS"),

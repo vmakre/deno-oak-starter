@@ -34,7 +34,7 @@ const register = [
   /** router handler */
   async (ctx: Context) => {
     const request = ctx.request;
-    const userData = (await request.body()).value as CreateUser;
+    const userData =  await request.body.json() as CreateUser;
     const user = await authService.registerUser(userData);
     ctx.response.body = user;
   },
@@ -49,13 +49,14 @@ const loginSchema = {
   password: [required, lengthBetween(6, 12)],
 };
 
+//  (ctx: Context, next: () => Promise<void>) 
 const login = [
   /** request validation middleware */
   requestValidator({ bodyRules: loginSchema }),
   /** router handler */
   async (ctx: Context) => {
     const request = ctx.request;
-    const credential = (await request.body()).value as LoginCredential;
+    const credential = await request.body.json() as LoginCredential;
     const token = await authService.loginUser(credential);
     ctx.response.body = token;
   },
@@ -70,7 +71,7 @@ const refreshToken = [
   /** router handler */
   async (ctx: Context) => {
     const request = ctx.request;
-    const data = (await request.body()).value as RefreshToken;
+    const data = (await request.body.json()).value as RefreshToken;
 
     const token = await authService.refreshToken(
       data["refresh_token"],

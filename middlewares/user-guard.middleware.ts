@@ -1,5 +1,5 @@
 import { httpErrors } from "@oak/mod.ts";
-import { type Context, UserRole } from "./../types.ts";
+import type { Context,  UserRole } from "./../types.ts";
 import { hasUserRole } from "../helpers/roles.ts";
 
 

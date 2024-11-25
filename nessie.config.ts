@@ -1,6 +1,6 @@
-import { ClientPostgreSQL } from "https://deno.land/x/nessie@2.0.11/mod.ts";
-import { ClientMySQL } from "https://deno.land/x/nessie@2.0.11/mod.ts";
-import { ClientSQLite } from "https://deno.land/x/nessie@2.0.11/mod.ts";
+import { ClientPostgreSQL } from "nessie";
+import { ClientMySQL } from "nessie";
+import { ClientSQLite } from "nessie";
 
 /** These are the default config options. */
 const clientOptions = {
@@ -9,10 +9,10 @@ const clientOptions = {
 };
 
 const clientMySql = new ClientMySQL(clientOptions, {
-  hostname: "localhost",
+  hostname: "192.168.100.8",
   port: 3306,
   username: "root",
-  password: "example", // uncomment this line for <8
+  password: "root", // uncomment this line for <8
   db: "deno_api_db",
 });
 

@@ -1,5 +1,5 @@
 import * as userRepo from "./../repositories/user.repository.ts";
-import { httpErrors } from "https://deno.land/x/oak@v17.1.3/mod.ts";
+import { httpErrors } from "@oak/mod.ts";
 import * as encription from "../helpers/encription.ts";
 import * as jwt from "../helpers/jwt.ts";
 import  {
@@ -49,14 +49,13 @@ export const loginUser = async (credential: LoginCredential) => {
       const isValidPass = await encription.compare(password, passHash);
       /** return token */
       if (isValidPass) {
-        return {
-          "access_token": jwt.getAuthToken(user),
-          "refresh_token": jwt.getRefreshToken(user),
-        };
+          return {
+            "access_token": await jwt.getAuthToken(user),
+            "refresh_token": await jwt.getRefreshToken(user),
+          } ; 
       }
     }
   }
-
   throw new httpErrors.Unauthorized("Wrong credential");
 };
 

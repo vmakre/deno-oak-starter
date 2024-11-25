@@ -16,7 +16,8 @@
                 "run",
                 "--unstable",
                 "--inspect-wait",
-                "--allow-all"
+                "--allow-all",
+                "--env"
             ],
             "attachSimplePort": 9229
         }

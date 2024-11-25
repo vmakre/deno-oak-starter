@@ -4,11 +4,11 @@ deno oak starter kit with auth middleware
 
 <img src="https://deno.land/images/deno_logo.png" alt="logo" width="200"/>
 
-This is a starter project to create Deno RESTful API using oak. [oak](https://github.com/oakserver/oak) is a middleware framework and router middleware for Deno, inspired by popular Node.js framework [Koa](https://koajs.com/) and [@koa/router](https://github.com/koajs/router/).
+This is a starter project to create Deno RESTful API using oak. 
+[oak](https://github.com/oakserver/oak) is a middleware framework and router middleware for Deno, inspired by popular Node.js framework [Koa](https://koajs.com/) and [@koa/router](https://github.com/koajs/router/).
 
 This project covers
 - Swagger Open API doc
-- Docker container environment
 - JWT authentication 
 - User authorization
 - Request validation
@@ -28,9 +28,7 @@ This project covers
  7) [How to use JWT authorization](#how-to-use-jwt-authorization)
  8) [How to add auth guards](#how-to-add-auth-guards)
  9) [Error handling](#error-handling)
- 10) [Contributing](#contributing)
- 11) [Contributors](#contributors)
- 12) [Roadmap](#roadmap)
+ 10) [Roadmap](#roadmap)
 
 ## Setup
 We can run the project **with/ without Docker**. 

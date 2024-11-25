@@ -2,12 +2,14 @@ import {
   isHttpError,
   Status,
 } from "@oak/mod.ts";
-import { Context } from "./../types.ts";
+import type { Context } from "./../types.ts";
 
 const errorMiddleware = async (ctx: Context, next: () => Promise<void>) => {
   try {
     await next();
   } catch (err) {
+
+    
     let message = err.message;
     const status = err.status || err.statusCode || Status.InternalServerError;
 
@@ -23,7 +25,7 @@ const errorMiddleware = async (ctx: Context, next: () => Promise<void>) => {
     }
 
     if (Deno.env.get("ENV") === "dev" || Deno.env.get("ENV") === "development") {
-      console.log(err);
+        console.log(err);
     }
 
     ctx.response.status = status;
