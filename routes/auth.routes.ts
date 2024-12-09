@@ -18,7 +18,7 @@ import { requestValidator } from "./../middlewares/request-validator.middleware.
  * for user create/update 
  * */
 const registrationSchema = {
-  name: [required],
+  first_name: [required],
   email: [required, isEmail],
   password: [required, lengthBetween(6, 12)],
 };

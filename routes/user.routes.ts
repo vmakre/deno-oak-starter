@@ -14,7 +14,7 @@ import { hasUserRole } from "../helpers/roles.ts";
 
 /** request body schema for user create/update */
 const userSchema = {
-  name: [required],
+  first_name: [required],
   email: [required, isEmail],
 };
 

@@ -53,19 +53,8 @@ We can run the project **with/ without Docker**.
     - Browse `Swagger Open API` Doc at [http://localhost:8105](http://localhost:8105)
 
 ## Migrations 
-We use [nessie](https://deno.land/x/nessie) to manage database migration. 
-- In the application root, we have `nessie.config.ts`. Make sure to update this with the DB credentials. 
-- Run the following command to run the migration. Migration should create necessary tables and dump the data.
-```
-$ deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v2.0.11/cli.ts migrate
-```
 
-With this, the user table would be created and the table would be seeded with fake data
 
-- Further, to add new migration, for example, to create new product table run
-```
-deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v2.0.11/cli.ts make create_product
-```
 
 ## Modules
 
@@ -74,7 +63,6 @@ deno run --allow-net --allow-read --allow-write https://deno.land/x/nessie@v2.0.
 | ---------|---------|
 |[oak@v17.1.3](https://deno.land/x/oak@v17.1.3)| Deno oak middleware framework|
 |[mysql@2.12.1](https://deno.land/x/mysql@2.12.1)|MySQL driver for Deno|
-|[nessie@v2.0.11](https://deno.land/x/nessie@v2.0.11)| DB migration tool for Deno|
 |[validasaur@v0.15.0](https://deno.land/x/validasaur@v0.15.0)| validation library|
 |[djwt@v3.0.2](https://deno.land/x/djwt@v3.0.2)| JWT token encoding|
 |[bcrypt@v0.4.1](https://deno.land/x/bcrypt@v0.4.1)| bcrypt encription lib|

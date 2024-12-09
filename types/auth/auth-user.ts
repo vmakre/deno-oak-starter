@@ -10,7 +10,11 @@ export type AuthUser = {
   /** user email address */
   email: string;
   /** user name */
-  name: string;
+  first_name: string;
+  /** user last name */
+  last_name: string;
   /** user roles */
   roles: string;
+  /** active or not */
+  is_active: boolean;
 };

@@ -1,117 +1,99 @@
+import type { Insertable, Updateable } from 'kysely';
 import { db } from "./../db/db.ts";
-import { UserInfo } from "../types.ts";
+import type { AuthUser } from "../types.ts";
+import { httpErrors } from "@oak/mod.ts";
+import type { Users } from "../db/db.d.ts";
 
 /**
  * Get all users list
  */
-const getUsers = async () => {
-  return await db.query(`
-    SELECT 
-      id, name, email, roles,
-      is_active, created_at, updated_at 
-    FROM users
-  `);
-};
+const getUsers =  async() => {
+    const query = db.selectFrom('users')
+ 
+    return await query.selectAll().execute()
+  }
 
 /**
- * get user by user id
+ * get user by user id , email, firstname , lastname
  */
-const getUserById = async (id: number) => {
-  const users = await db.query(
-    `
-    SELECT
-      id, name, email, roles,
-      is_active, created_at, updated_at
-    FROM users where id = ? limit 0, 1`,
-    [id],
-  );
-  return users.length ? users[0] : null;
-};
+const getUser = async(criteria: Partial<AuthUser>) => {
+  let query = db.selectFrom('users')
 
-/**
- * get user by email
- * return user info with password
- */
-const getUserByEmail = async (email: string) => {
-  const users = await db.query(
-    `
-    SELECT
-      id, name, email, password, roles,
-      is_active, created_at, updated_at
-    FROM users where email = ? limit 0, 1`,
-    [email],
-  );
-  return users.length ? users[0] : null;
-};
+  if (criteria.id) {
+    query = query.where('id', '=', criteria.id) // Kysely is immutable, you must re-assign!
+  }
+
+  if (criteria.email) {
+    query = query.where('email', '=', criteria.email)
+  }
+
+  if (criteria.last_name !== undefined) {
+    query = query.where(
+      'first_name', criteria.last_name === null ? 'is' : '=', criteria.last_name
+    )
+  }
+return await query.selectAll().execute()
+}
 
 /**
  * Create user
  */
-const createUser = async (
-  user: UserInfo,
-) => {
-  const { name, email, password } = user;
-  const roles = user.roles.join(",");
+const createUser = async function insertUser(user: Insertable<Users>) {
+  const check = await db.selectFrom('users').where('email','=', user.email! ).selectAll().execute()
+  if (check.length == 0 ){
+  user.is_active =1
+  return await db
+    .insertInto('users')
+    .values(user)
+    .executeTakeFirstOrThrow();
+  // ^ Selectable<User>
+  } else {
+    // Error such email exists
+     throw new httpErrors.Unauthorized("email_unique")
+  }
+}
+// const createUser = async(user: NewPerson) => {
+//   const { insertId } = await db.insertInto('users')
+//     .values(user)
+//     .executeTakeFirstOrThrow()
 
-  const { lastInsertId } = await db.query(
-    `
-    INSERT into users (
-      id, name, email, roles, password, 
-      is_active, created_at, updated_at
-    )
-    VALUES (
-      DEFAULT, ? , ? , ?, ?, 
-      1, DEFAULT, DEFAULT
-    );
-    `,
-    [name, email, roles, password],
-  );
-
-  return await getUserById(lastInsertId);
-};
+//   return await getUser(Number(insertId!))
+// }
 
 /**
  * Update user
  */
-const updateUser = async (
-  id: number,
-  user: { name: string; email: string },
-) => {
-  const { name, email } = user;
-  const result = await db.query(
-    `
-    UPDATE users SET
-      name = ?,
-      email = ?,
-      updated_at = DEFAULT
-    WHERE id = ?;
-    `,
-    [name, email, id],
-  );
-
-  return result;
-};
+const updateUser = async function updateUser(user: Updateable<Users>) {
+  if(user.id != null && user.id != undefined) {
+  return await db
+    .updateTable('users')
+    .set(user)
+    .where( 'id', "=", user.id )
+    // .returning(['email', 'id'])
+    .executeTakeFirstOrThrow();
+  // ^ { email: string; id: number; }
+  } else{
+    throw new Error('user id not defined on update')
+  }
+}
 
 /**
  * Delete user
  */
-const deleteUser = async (
-  id: number,
-) => {
-  const result = await db.query(
-    `
-    DELETE FROM users
-    WHERE id = ?;
-    `,
-    [id],
-  );
-  return result;
-};
+const  deleteUser = async( id : number) => {
+  const user = db.selectFrom('users').where('id','=', id ).selectAll().execute()
+
+  // const user = await getUser( id )
+  if (user != null) {
+    await db.deleteFrom('users').where('id', '=', id ).execute()
+  }
+  return user
+}
+
 
 export {
   getUsers,
-  getUserById,
-  getUserByEmail,
+  getUser,
   createUser,
   updateUser,
   deleteUser,

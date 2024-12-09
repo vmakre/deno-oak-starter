@@ -1,7 +1,9 @@
 /** Request body to create user */
 export type CreateUser = {
-  /** user name */
-  name: string;
+  /** user first name */
+  first_name: string;
+  /** user last name */
+  last_name: string;
   /** user email */
   email: string;
   /** user password */

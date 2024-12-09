@@ -8,20 +8,22 @@ const tDec=(d:Uint8Array)=>new TextDecoder().decode(d);
 // generate key
 const genKey = async (k:string)=>await crypto.subtle.importKey("raw", tEnc(k), {name:"HMAC", hash:"SHA-256"}, false, ["sign", "verify"]);
 
+// json parts [0]-Header  , [1]-Payload , [2] - Signature
 const checkJWTexpired = async (key:CryptoKey, jwt:string)=>{
+  let jsonpart1 = '' ;
   const jwtParts=jwt.split(".");
   if(jwtParts.length!==3) return;
   const data=tEnc(jwtParts[0]+'.'+jwtParts[1]);
   if(await crypto.subtle.verify({name:"HMAC"}, key, bDec(jwtParts[2]), data)===true){
-    const jsonpart1 = JSON.parse(tDec(bDec(jwtParts[1]))) ;
+    jsonpart1 = JSON.parse(tDec(bDec(jwtParts[1]))) ;
+    //  const vremeto =  ((jsonpart1.exp - Date.now()) / 1000 / 60 ) ;
     if (Date.now() > jsonpart1.exp) {
         throw new httpErrors.Unauthorized("Token not valid or expired");
     }     
   }
-  return JSON.parse(tDec(bDec(jwtParts[1])));
+  return jsonpart1;
+  // return JSON.parse(tDec(bDec(jwtParts[1])));
 };
-
-
 /**
  * Decode token and returns payload
  * if given token is not expired 
