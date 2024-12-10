@@ -33,12 +33,10 @@ This project covers
 ## Setup
 We can run the project **with/ without Docker**. 
 - **Pre-Requisite**
-    - For dockerized environment we need 
-        - docker, 
-        - docker-compose installed.
     - To run API server without Docker we need
         - MySQL server running &
         - Deno run time installed
+        - .env file must exist in compile time
 - **Configuration**
     - In application root, rename example env file `env.example` to `.env`.
     - An example env file contains MySQL credentials for the dockerized environment. For non-docker setup, **update MySQL credentials** here.
